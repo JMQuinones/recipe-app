@@ -5,4 +5,5 @@
     <string name="recipes_menu">Recipes</string>
     <string name="saved_menu">Saved</string>
     <string name="search_menu">Search</string>
+    <string name="recipe_img_description">Imagen de un alimento</string>
 </resources>

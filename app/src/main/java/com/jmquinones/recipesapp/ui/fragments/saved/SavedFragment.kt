@@ -1,11 +1,10 @@
-package com.jmquinones.recipesapp.ui.fragments
+package com.jmquinones.recipesapp.ui.fragments.saved
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.jmquinones.recipesapp.R
 import com.jmquinones.recipesapp.databinding.FragmentSavedBinding
 
 class SavedFragment : Fragment() {

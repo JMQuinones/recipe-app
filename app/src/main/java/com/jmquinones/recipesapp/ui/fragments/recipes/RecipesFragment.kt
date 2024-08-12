@@ -1,4 +1,4 @@
-package com.jmquinones.recipesapp.ui.fragments
+package com.jmquinones.recipesapp.ui.fragments.recipes
 
 import android.os.Bundle
 import android.util.Log
@@ -6,18 +6,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.jmquinones.recipesapp.databinding.FragmentRecipesBinding
-import com.jmquinones.recipesapp.models.Recipe
 import com.jmquinones.recipesapp.models.ResponseWrapper
-import com.jmquinones.recipesapp.repository.RecipesRepository
 import com.jmquinones.recipesapp.ui.RecipesActivity
 import com.jmquinones.recipesapp.ui.RecipesViewModel
+import com.jmquinones.recipesapp.ui.fragments.recipes.adapter.RecipesAdapter
 import com.jmquinones.recipesapp.utils.RecipesState
 import kotlinx.coroutines.launch
 
@@ -28,6 +26,7 @@ class RecipesFragment : Fragment() {
     }
     private var _binding: FragmentRecipesBinding? = null
     private val binding get() = _binding!!
+    private lateinit var recipesAdapter: RecipesAdapter
 
     //private val recipesViewModel by viewModels<RecipesViewModel>()
     private lateinit var recipesViewModel: RecipesViewModel
@@ -48,12 +47,22 @@ class RecipesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupRecyclerview()
         recipesViewModel = (activity as RecipesActivity).recipesViewModel
         loadRecipes(view)
     }
 
+    private fun setupRecyclerview() {
+        recipesAdapter = RecipesAdapter()
+        binding.rvRecipes.apply {
+            Log.d(TAG, "init rv")
+            adapter = recipesAdapter
+            layoutManager = LinearLayoutManager(context)
+        }
+    }
+
     private fun loadRecipes(view: View) {
-        val recipesRepository = RecipesRepository()
+        Log.d(TAG, "calling api")
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED){
                 recipesViewModel.state.collect{
@@ -69,5 +78,6 @@ class RecipesFragment : Fragment() {
 
     private fun handleSuccess(response: ResponseWrapper) {
         Log.d(TAG, response.recipes.toString())
+        recipesAdapter.updateList(response.recipes)
     }
 }

@@ -71,4 +71,8 @@ dependencies {
     // Dagger
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
+
+    // Glide
+    implementation(libs.glide)
+    ksp(libs.compiler)
 }
