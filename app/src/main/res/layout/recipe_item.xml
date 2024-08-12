@@ -18,8 +18,8 @@
             android:layout_height="match_parent">
             <ImageView
                 android:id="@+id/ivRecipe"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:contentDescription="@string/recipe_img_description"
                 android:scaleType="centerCrop"
                 app:layout_constraintStart_toStartOf="parent"
@@ -39,14 +39,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/TextAppearance.MaterialComponents.Headline6"
-                    android:textAlignment="center"
                     tools:text="RECIPE TITLE"/>
                 <TextView
                     android:id="@+id/tvAuthor"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/TextAppearance.MaterialComponents.Subtitle1"
-                    android:textAlignment="center"
                     tools:text="AUTHOR"/>
                 <TextView
                     android:id="@+id/tvDescription"
@@ -59,7 +57,7 @@
                     tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent a ipsum lacinia, bibendum tortor eu, vehicula erat. Aliquam elementum lacus rhoncus elit cursus porta et eget magna. Curabitur sit amet augue ac ante finibus rutrum vel vitae tortor. Sed dapibus nisi eros, in placerat lacus rutrum id. Nam facilisis dolor sed ipsum volutpat, et tristique nulla pellentesque. Praesent tellus dolor, rutrum eget nunc ac, vulputate hendrerit ipsum. Fusce porta, est in condimentum lobortis, orci mi fringilla lacus, vitae tempor nulla est eu nulla. Suspendisse venenatis leo nunc, id ullamcorper ipsum finibus vitae. Quisque lobortis egestas augue, in bibendum ligula consectetur eget. Curabitur gravida, mauris at placerat placerat, justo eros ornare erat, eget faucibus velit quam vel est. Sed placerat vehicula nunc ac volutpat. Cras accumsan, lectus a fringilla facilisis, ex ex pretium turpis, nec sollicitudin lorem ligula eu augue. "/>
                 <TextView
                     android:id="@+id/tvDetails"
-                    android:textAlignment="center"
+                    android:textAlignment="textEnd"
                     style="@style/TextAppearance.MaterialComponents.Body2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

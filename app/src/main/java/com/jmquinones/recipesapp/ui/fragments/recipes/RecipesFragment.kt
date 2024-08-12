@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -67,8 +68,8 @@ class RecipesFragment : Fragment() {
             repeatOnLifecycle(Lifecycle.State.STARTED){
                 recipesViewModel.state.collect{
                     when(it) {
-                        is RecipesState.Error -> Snackbar.make(view, "Se produjo un error: ${it.error}", Snackbar.LENGTH_LONG)
-                        is RecipesState.Loading -> Snackbar.make(view, "Cargando recetas ...", Snackbar.LENGTH_LONG)
+                        is RecipesState.Error -> handleError(it)
+                        is RecipesState.Loading -> controlProgressBar(true)
                         is RecipesState.Success -> handleSuccess(it.response)
                     }
                 }
@@ -76,8 +77,17 @@ class RecipesFragment : Fragment() {
         }
     }
 
+    private fun handleError(recipesState: RecipesState.Error) {
+        controlProgressBar(false)
+        Snackbar.make(requireView(), "Se produjo un error: ${recipesState.error}", Snackbar.LENGTH_LONG).show()
+    }
+
     private fun handleSuccess(response: ResponseWrapper) {
-        Log.d(TAG, response.recipes.toString())
         recipesAdapter.updateList(response.recipes)
+        controlProgressBar(false)
+    }
+
+    private fun controlProgressBar(isVisible: Boolean){
+        binding.paginationProgressBar.isVisible = isVisible
     }
 }
