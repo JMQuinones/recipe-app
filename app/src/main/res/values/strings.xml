@@ -2,9 +2,9 @@
     <string name="app_name">RecipesApp</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="recipes_menu">Recipes</string>
-    <string name="saved_menu">Saved</string>
-    <string name="search_menu">Search</string>
+    <string name="recipes_menu">Todo</string>
+    <string name="saved_menu">Guardadas</string>
+    <string name="search_menu">Buscar</string>
     <string name="recipe_img_description">Imagen de un alimento</string>
     <string name="ingredients">Ingredientes</string>
     <string name="instructions">Preparación</string>
