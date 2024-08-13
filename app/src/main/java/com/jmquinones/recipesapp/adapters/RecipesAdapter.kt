@@ -1,4 +1,4 @@
-package com.jmquinones.recipesapp.ui.fragments.recipes.adapter
+package com.jmquinones.recipesapp.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,7 +8,7 @@ import com.jmquinones.recipesapp.R
 import com.jmquinones.recipesapp.models.Recipe
 import com.jmquinones.recipesapp.utils.RecipesDiffUtil
 
-class RecipesAdapter(private var recipesList: List<Recipe> = emptyList()): RecyclerView.Adapter<RecipesViewHolder>() {
+class RecipesAdapter(private var recipesList: List<Recipe> = emptyList(), private val onItemSelected:(Recipe) -> Unit): RecyclerView.Adapter<RecipesViewHolder>() {
 
     fun updateList(newList: List<Recipe>){
         // TODO Add diffcallback
@@ -29,6 +29,6 @@ class RecipesAdapter(private var recipesList: List<Recipe> = emptyList()): Recyc
     override fun getItemCount() = recipesList.size
 
     override fun onBindViewHolder(holder: RecipesViewHolder, position: Int) {
-        holder.render(recipesList[position])
+        holder.render(recipesList[position], onItemSelected)
     }
 }

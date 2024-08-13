@@ -6,4 +6,6 @@
     <string name="saved_menu">Saved</string>
     <string name="search_menu">Search</string>
     <string name="recipe_img_description">Imagen de un alimento</string>
+    <string name="ingredients">Ingredientes</string>
+    <string name="instructions">Preparación</string>
 </resources>

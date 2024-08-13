@@ -6,4 +6,11 @@
     </style>
 
     <style name="Theme.RecipesApp" parent="Base.Theme.RecipesApp" />
+    <style name="Details" parent="Base.Theme.RecipesApp">
+        <item name="android:layout_margin">8dp</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:drawablePadding">16dp</item>
+        <item name="android:textStyle">italic</item>
+    </style>
 </resources>

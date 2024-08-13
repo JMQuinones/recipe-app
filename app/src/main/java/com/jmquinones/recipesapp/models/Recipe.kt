@@ -1,5 +1,7 @@
 package com.jmquinones.recipesapp.models
 
+import java.io.Serializable
+
 data class Recipe(
     val author: Author,
     val description: String,
@@ -9,4 +11,4 @@ data class Recipe(
     val ingredients: String,
     val instructions: String,
     val title: String
-)
+): Serializable

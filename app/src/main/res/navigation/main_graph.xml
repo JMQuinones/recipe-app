@@ -38,8 +38,7 @@
         android:label="activity_recipe_detail"
         tools:layout="@layout/activity_recipe_detail" >
         <argument
-            android:name="id"
-            app:argType="long"
-            android:defaultValue="0L" />
+            android:name="recipe"
+            app:argType="com.jmquinones.recipesapp.models.Recipe" />
     </activity>
 </navigation>

@@ -1,4 +1,4 @@
-package com.jmquinones.recipesapp.ui.fragments.recipes.adapter
+package com.jmquinones.recipesapp.adapters
 
 import android.content.Context
 import android.view.View
@@ -9,14 +9,16 @@ import com.jmquinones.recipesapp.models.Recipe
 
 class RecipesViewHolder(view: View): RecyclerView.ViewHolder(view) {
     private val binding = RecipeItemBinding.bind(view)
-    fun render(recipe: Recipe) {
+    fun render(recipe: Recipe, onItemSelected: (Recipe) -> Unit) {
         val context: Context = binding.tvTitle.context
-
+        binding.cvRecipe.setOnClickListener{
+            onItemSelected(recipe)
+        }
         binding.tvTitle.text = recipe.title
         Glide.with(binding.root).load(recipe.image).into(binding.ivRecipe)
         binding.tvDescription.text = recipe.description
-        binding.tvAuthor.text = recipe.author.name
-        binding.tvDetails.text = "${recipe.details.preparationTime} - ${recipe.details.type} - ${recipe.details.skillLevel}"
+        binding.tvAuthor.text = recipe.author?.name
+        binding.tvDetails.text = "${recipe.details?.preparationTime} - ${recipe.details?.type} - ${recipe.details?.skillLevel}"
         //binding.
     }
 

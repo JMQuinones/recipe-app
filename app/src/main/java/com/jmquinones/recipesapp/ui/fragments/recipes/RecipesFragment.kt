@@ -6,17 +6,19 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.jmquinones.recipesapp.databinding.FragmentRecipesBinding
 import com.jmquinones.recipesapp.models.ResponseWrapper
 import com.jmquinones.recipesapp.ui.RecipesActivity
 import com.jmquinones.recipesapp.ui.RecipesViewModel
-import com.jmquinones.recipesapp.ui.fragments.recipes.adapter.RecipesAdapter
+import com.jmquinones.recipesapp.adapters.RecipesAdapter
 import com.jmquinones.recipesapp.utils.RecipesState
 import kotlinx.coroutines.launch
 
@@ -54,16 +56,20 @@ class RecipesFragment : Fragment() {
     }
 
     private fun setupRecyclerview() {
-        recipesAdapter = RecipesAdapter()
+        recipesAdapter = RecipesAdapter(onItemSelected = { recipe ->
+            Toast.makeText(context, recipe.title, Toast.LENGTH_LONG).show()
+            findNavController().navigate(
+                RecipesFragmentDirections.actionRecipesFragmentToRecipeDetailActivity(recipe)
+            )
+        })
+
         binding.rvRecipes.apply {
-            Log.d(TAG, "init rv")
             adapter = recipesAdapter
             layoutManager = LinearLayoutManager(context)
         }
     }
 
     private fun loadRecipes(view: View) {
-        Log.d(TAG, "calling api")
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED){
                 recipesViewModel.state.collect{
@@ -79,6 +85,7 @@ class RecipesFragment : Fragment() {
 
     private fun handleError(recipesState: RecipesState.Error) {
         controlProgressBar(false)
+        Log.e(TAG, recipesState.error)
         Snackbar.make(requireView(), "Se produjo un error: ${recipesState.error}", Snackbar.LENGTH_LONG).show()
     }
 
