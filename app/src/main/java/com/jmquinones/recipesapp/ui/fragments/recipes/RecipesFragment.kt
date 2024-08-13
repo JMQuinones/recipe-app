@@ -57,7 +57,6 @@ class RecipesFragment : Fragment() {
 
     private fun setupRecyclerview() {
         recipesAdapter = RecipesAdapter(onItemSelected = { recipe ->
-            Toast.makeText(context, recipe.title, Toast.LENGTH_LONG).show()
             findNavController().navigate(
                 RecipesFragmentDirections.actionRecipesFragmentToRecipeDetailActivity(recipe)
             )

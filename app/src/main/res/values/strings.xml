@@ -8,4 +8,6 @@
     <string name="recipe_img_description">Imagen de un alimento</string>
     <string name="ingredients">Ingredientes</string>
     <string name="instructions">Preparación</string>
+    <string name="details_img_description">Image de la receta</string>
+    <string name="save_recipe">Guardar</string>
 </resources>
