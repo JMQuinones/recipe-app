@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.navArgs
 import com.bumptech.glide.Glide
 import com.jmquinones.recipesapp.databinding.ActivityRecipeDetailBinding
+import com.jmquinones.recipesapp.utils.RecipeDetailsUtils.Companion.getIngredients
+import com.jmquinones.recipesapp.utils.RecipeDetailsUtils.Companion.timeToString
 import java.math.BigDecimal
 import java.math.RoundingMode
 import java.util.Locale
@@ -27,8 +29,8 @@ class RecipeDetailActivity : AppCompatActivity() {
 
     private fun initUI() {
         val recipe = args.recipe
-        //val prepTime = timeToString(recipe.details.preparationTime)
-        val prepTime = timeToString(452)
+        val prepTime = timeToString(recipe.details.preparationTime)
+        //val prepTime = timeToString(452)
 
         val ingredients = getIngredients(recipe.ingredients)
         setUpIngredientsView(ingredients)
@@ -45,7 +47,7 @@ class RecipeDetailActivity : AppCompatActivity() {
 
     }
 
-    private fun timeToString(time: Int): String {
+    /*private fun timeToString(time: Int): String {
         if (time <= 60){
             return "$time min"
         }
@@ -60,7 +62,7 @@ class RecipeDetailActivity : AppCompatActivity() {
             "\u2022 $item"
         }
         return list
-    }
+    }*/
 
     private fun setUpIngredientsView(ingredients: List<String>){
         /*val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, ingredients)

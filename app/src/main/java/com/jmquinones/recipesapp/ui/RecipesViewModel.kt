@@ -18,7 +18,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class RecipesViewModel(val recipesRepository: RecipesRepository, app:Application): ViewModel(){
+class RecipesViewModel(private val recipesRepository: RecipesRepository, app:Application): ViewModel(){
     private var _state = MutableStateFlow<RecipesState>(RecipesState.Loading)
     val state: StateFlow<RecipesState> = _state
     private var page = 0

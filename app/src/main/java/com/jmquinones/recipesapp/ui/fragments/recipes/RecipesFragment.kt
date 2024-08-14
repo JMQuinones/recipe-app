@@ -30,9 +30,10 @@ import kotlinx.coroutines.launch
 
 
 class RecipesFragment : Fragment() {
-    companion object{
+    companion object {
         val TAG = "RecipesFragment"
     }
+
     private var _binding: FragmentRecipesBinding? = null
     private val binding get() = _binding!!
 
@@ -59,11 +60,7 @@ class RecipesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         //setupRecyclerview()
-        pagingAdapter = RecipesPagingAdapter()
-        binding.rvRecipes.apply {
-            layoutManager = LinearLayoutManager(requireContext())
-            adapter = pagingAdapter
-        }
+        setupPagingRecyclerView()
 
         recipesViewModel = (activity as RecipesActivity).recipesViewModel
         //recipesViewModel = ViewModelProvider(this)[RecipesViewModel::class.java]
@@ -74,6 +71,18 @@ class RecipesFragment : Fragment() {
         }
         //loadRecipes(view)
 
+    }
+
+    private fun setupPagingRecyclerView(){
+        pagingAdapter = RecipesPagingAdapter(onItemSelected = { recipe ->
+            findNavController().navigate(
+                RecipesFragmentDirections.actionRecipesFragmentToRecipeDetailActivity(recipe)
+            )
+        })
+        binding.rvRecipes.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = pagingAdapter
+        }
     }
 
     private fun setupRecyclerview() {
@@ -91,9 +100,9 @@ class RecipesFragment : Fragment() {
 
     private fun loadRecipes(view: View) {
         lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED){
-                recipesViewModel.state.collect{
-                    when(it) {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                recipesViewModel.state.collect {
+                    when (it) {
                         is RecipesState.Error -> handleError(it)
                         is RecipesState.Loading -> controlProgressBar(true)
                         is RecipesState.Success -> handleSuccess(it.response)
@@ -106,7 +115,11 @@ class RecipesFragment : Fragment() {
     private fun handleError(recipesState: RecipesState.Error) {
         controlProgressBar(false)
         Log.e(TAG, recipesState.error)
-        Snackbar.make(requireView(), "Se produjo un error: ${recipesState.error}", Snackbar.LENGTH_LONG).show()
+        Snackbar.make(
+            requireView(),
+            "Se produjo un error: ${recipesState.error}",
+            Snackbar.LENGTH_LONG
+        ).show()
     }
 
     private fun handleSuccess(response: ResponseWrapper) {
@@ -114,7 +127,7 @@ class RecipesFragment : Fragment() {
         controlProgressBar(false)
     }
 
-    private fun controlProgressBar(isVisible: Boolean){
+    private fun controlProgressBar(isVisible: Boolean) {
         binding.paginationProgressBar.isVisible = isVisible
     }
 }
