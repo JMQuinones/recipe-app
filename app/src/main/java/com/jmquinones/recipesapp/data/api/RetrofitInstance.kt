@@ -1,6 +1,5 @@
-package com.jmquinones.recipesapp.api
+package com.jmquinones.recipesapp.data.api
 
-import com.google.gson.Gson
 import com.jmquinones.recipesapp.utils.Constants.Companion.BASE_URL
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

@@ -15,7 +15,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.jmquinones.recipesapp.R
 import com.jmquinones.recipesapp.databinding.ActivityMainBinding
 import com.jmquinones.recipesapp.models.Recipe
-import com.jmquinones.recipesapp.repository.RecipesRepository
+import com.jmquinones.recipesapp.data.repository.RecipesRepository
 import com.jmquinones.recipesapp.utils.RecipesState
 import kotlinx.coroutines.launch
 

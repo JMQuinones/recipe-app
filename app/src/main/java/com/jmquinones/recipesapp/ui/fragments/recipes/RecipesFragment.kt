@@ -9,9 +9,13 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.paging.PagingDataAdapter
+import androidx.paging.filter
+import androidx.paging.map
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.jmquinones.recipesapp.databinding.FragmentRecipesBinding
@@ -19,7 +23,9 @@ import com.jmquinones.recipesapp.models.ResponseWrapper
 import com.jmquinones.recipesapp.ui.RecipesActivity
 import com.jmquinones.recipesapp.ui.RecipesViewModel
 import com.jmquinones.recipesapp.adapters.RecipesAdapter
+import com.jmquinones.recipesapp.adapters.RecipesPagingAdapter
 import com.jmquinones.recipesapp.utils.RecipesState
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 
@@ -29,7 +35,9 @@ class RecipesFragment : Fragment() {
     }
     private var _binding: FragmentRecipesBinding? = null
     private val binding get() = _binding!!
+
     private lateinit var recipesAdapter: RecipesAdapter
+    private lateinit var pagingAdapter: RecipesPagingAdapter
 
     //private val recipesViewModel by viewModels<RecipesViewModel>()
     private lateinit var recipesViewModel: RecipesViewModel
@@ -50,9 +58,22 @@ class RecipesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupRecyclerview()
+        //setupRecyclerview()
+        pagingAdapter = RecipesPagingAdapter()
+        binding.rvRecipes.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = pagingAdapter
+        }
+
         recipesViewModel = (activity as RecipesActivity).recipesViewModel
-        loadRecipes(view)
+        //recipesViewModel = ViewModelProvider(this)[RecipesViewModel::class.java]
+        viewLifecycleOwner.lifecycleScope.launch {
+            recipesViewModel.recipes.collectLatest { pagingData ->
+                pagingAdapter.submitData(pagingData)
+            }
+        }
+        //loadRecipes(view)
+
     }
 
     private fun setupRecyclerview() {
