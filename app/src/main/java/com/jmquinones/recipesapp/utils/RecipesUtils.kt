@@ -1,9 +1,11 @@
 package com.jmquinones.recipesapp.utils
 
+import com.jmquinones.recipesapp.models.Recipe
+import com.jmquinones.recipesapp.models.RecipeRoom
 import java.math.BigDecimal
 import java.math.RoundingMode
 
-class RecipeDetailsUtils {
+class RecipesUtils {
     companion object{
         fun timeToString(time: Int): String {
             if (time <= 60){
@@ -20,6 +22,18 @@ class RecipeDetailsUtils {
                 "\u2022 $item"
             }
             return list
+        }
+
+        fun recipeToRoomRecipe(recipe: Recipe): RecipeRoom{
+            return RecipeRoom(
+                recipe.author,
+                recipe.description,
+                recipe.details,
+                recipe.image,
+                recipe.ingredients,
+                recipe.instructions,
+                recipe.title,
+            )
         }
     }
 }

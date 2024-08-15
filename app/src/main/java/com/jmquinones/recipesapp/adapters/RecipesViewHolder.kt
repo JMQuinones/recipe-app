@@ -7,7 +7,7 @@ import com.bumptech.glide.Glide
 import com.jmquinones.recipesapp.R
 import com.jmquinones.recipesapp.databinding.RecipeItemBinding
 import com.jmquinones.recipesapp.models.Recipe
-import com.jmquinones.recipesapp.utils.RecipeDetailsUtils
+import com.jmquinones.recipesapp.utils.RecipesUtils
 
 class RecipesViewHolder(view: View): RecyclerView.ViewHolder(view) {
     private val binding = RecipeItemBinding.bind(view)
@@ -22,7 +22,7 @@ class RecipesViewHolder(view: View): RecyclerView.ViewHolder(view) {
         binding.tvAuthor.text = recipe.author.name
         binding.tvDetails.text = context.getString(
             R.string.details_placeholder,
-            recipe?.details?.preparationTime?.let { RecipeDetailsUtils.timeToString(it.or(60)) },
+            recipe?.details?.preparationTime?.let { RecipesUtils.timeToString(it.or(60)) },
             recipe?.details?.type,
             recipe?.details?.skillLevel
         )

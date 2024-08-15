@@ -8,11 +8,9 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.jmquinones.recipesapp.R
-import com.jmquinones.recipesapp.data.paging.RecipePagingSource
-import com.jmquinones.recipesapp.data.repository.RecipesRepository
 import com.jmquinones.recipesapp.databinding.RecipeItemBinding
 import com.jmquinones.recipesapp.models.Recipe
-import com.jmquinones.recipesapp.utils.RecipeDetailsUtils
+import com.jmquinones.recipesapp.utils.RecipesUtils
 
 class RecipesPagingAdapter(private val onItemSelected:(Recipe) -> Unit) :
     PagingDataAdapter<Recipe, RecipesPagingAdapter.ItemViewHolder>(DIFF_CALLBACK) {
@@ -40,7 +38,7 @@ class RecipesPagingAdapter(private val onItemSelected:(Recipe) -> Unit) :
             binding.tvAuthor.text = recipe?.author?.name
             binding.tvDetails.text = context.getString(
                 R.string.details_placeholder,
-                recipe?.details?.preparationTime?.let { RecipeDetailsUtils.timeToString(it.or(60)) },
+                recipe?.details?.preparationTime?.let { RecipesUtils.timeToString(it.or(60)) },
                 recipe?.details?.type,
                 recipe?.details?.skillLevel
             )

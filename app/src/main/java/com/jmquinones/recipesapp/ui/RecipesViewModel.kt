@@ -1,17 +1,15 @@
 package com.jmquinones.recipesapp.ui
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
 import com.jmquinones.recipesapp.data.paging.RecipePagingSource
-import com.jmquinones.recipesapp.models.Recipe
-import com.jmquinones.recipesapp.models.ResponseWrapper
 import com.jmquinones.recipesapp.data.repository.RecipesRepository
+import com.jmquinones.recipesapp.models.RecipeRoom
 import com.jmquinones.recipesapp.utils.Constants.Companion.PAGE_SIZE
 import com.jmquinones.recipesapp.utils.RecipesState
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,11 +19,10 @@ import kotlinx.coroutines.launch
 class RecipesViewModel(private val recipesRepository: RecipesRepository, app:Application): ViewModel(){
     private var _state = MutableStateFlow<RecipesState>(RecipesState.Loading)
     val state: StateFlow<RecipesState> = _state
-    private var page = 0
+    //getRecipes()
+    var savedRecipes: LiveData<List<RecipeRoom>> = recipesRepository.getSavedRecipes()
 
-    /*init {
-        getRecipes()
-    }*/
+    private var page = 0
 
     val recipes = Pager(
         config = PagingConfig(pageSize = PAGE_SIZE),
@@ -45,6 +42,14 @@ class RecipesViewModel(private val recipesRepository: RecipesRepository, app:App
             }
 
         }
+    }
+
+    fun saveRecipe(recipe: RecipeRoom) = viewModelScope.launch {
+        recipesRepository.upsertRecipe(recipe)
+    }
+
+    fun deleteRecipe(recipe: RecipeRoom) = viewModelScope.launch {
+        recipesRepository.deleteRecipe(recipe)
     }
 
 }

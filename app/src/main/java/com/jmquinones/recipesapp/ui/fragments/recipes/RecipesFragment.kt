@@ -61,8 +61,13 @@ class RecipesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         //setupRecyclerview()
         setupPagingRecyclerView()
-
         recipesViewModel = (activity as RecipesActivity).recipesViewModel
+        getRecipes()
+
+
+    }
+
+    private fun getRecipes() {
         //recipesViewModel = ViewModelProvider(this)[RecipesViewModel::class.java]
         viewLifecycleOwner.lifecycleScope.launch {
             recipesViewModel.recipes.collectLatest { pagingData ->
@@ -70,7 +75,6 @@ class RecipesFragment : Fragment() {
             }
         }
         //loadRecipes(view)
-
     }
 
     private fun setupPagingRecyclerView(){

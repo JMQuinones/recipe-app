@@ -11,7 +11,6 @@ import com.jmquinones.recipesapp.utils.RecipesDiffUtil
 class RecipesAdapter(private var recipesList: List<Recipe> = emptyList(), private val onItemSelected:(Recipe) -> Unit): RecyclerView.Adapter<RecipesViewHolder>() {
 
     fun updateList(newList: List<Recipe>){
-        // TODO Add diffcallback
         /*recipesList = list
         notifyDataSetChanged()*/
 

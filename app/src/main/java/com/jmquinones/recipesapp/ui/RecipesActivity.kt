@@ -13,6 +13,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.snackbar.Snackbar
 import com.jmquinones.recipesapp.R
+import com.jmquinones.recipesapp.data.db.RecipesDatabase
 import com.jmquinones.recipesapp.databinding.ActivityMainBinding
 import com.jmquinones.recipesapp.models.Recipe
 import com.jmquinones.recipesapp.data.repository.RecipesRepository
@@ -28,7 +29,10 @@ class RecipesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val recipesRepository = RecipesRepository()
+
+        val db = RecipesDatabase(this)
+        val recipesRepository = RecipesRepository(db)
+
         val viewModelProviderFactory = RecipesViewModelProviderFactory(application, recipesRepository)
         recipesViewModel = ViewModelProvider(this, viewModelProviderFactory)[RecipesViewModel::class.java]
         initUI()

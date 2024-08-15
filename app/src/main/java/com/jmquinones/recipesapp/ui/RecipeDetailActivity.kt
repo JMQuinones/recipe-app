@@ -2,32 +2,57 @@ package com.jmquinones.recipesapp.ui
 
 import android.os.Bundle
 import android.util.Log
-import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.navArgs
+import androidx.paging.LOG_TAG
 import com.bumptech.glide.Glide
+import com.google.android.material.snackbar.Snackbar
+import com.jmquinones.recipesapp.data.db.RecipesDatabase
+import com.jmquinones.recipesapp.data.repository.RecipesRepository
 import com.jmquinones.recipesapp.databinding.ActivityRecipeDetailBinding
-import com.jmquinones.recipesapp.utils.RecipeDetailsUtils.Companion.getIngredients
-import com.jmquinones.recipesapp.utils.RecipeDetailsUtils.Companion.timeToString
-import java.math.BigDecimal
-import java.math.RoundingMode
-import java.util.Locale
+import com.jmquinones.recipesapp.models.RecipeRoom
+import com.jmquinones.recipesapp.utils.RecipesUtils.Companion.getIngredients
+import com.jmquinones.recipesapp.utils.RecipesUtils.Companion.recipeToRoomRecipe
+import com.jmquinones.recipesapp.utils.RecipesUtils.Companion.timeToString
 
 class RecipeDetailActivity : AppCompatActivity() {
     companion object{
-        private val TAG = "RecipeDetailActivity"
+        private const val TAG = "RecipeDetailActivity"
     }
     private lateinit var binding: ActivityRecipeDetailBinding
+    private lateinit var recipesViewModel: RecipesViewModel
+
     private val args:RecipeDetailActivityArgs by navArgs()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRecipeDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        val db = RecipesDatabase(this)
+        val recipesRepository = RecipesRepository(db)
 
+        val viewModelProviderFactory = RecipesViewModelProviderFactory(application, recipesRepository)
+        recipesViewModel = ViewModelProvider(this, viewModelProviderFactory)[RecipesViewModel::class.java]
         initUI()
     }
 
     private fun initUI() {
+        initListeners()
+        loadData()
+
+    }
+
+    private fun initListeners() {
+        binding.fabSaveRecipe.setOnClickListener {
+            val recipe = recipeToRoomRecipe(args.recipe)
+            Log.d(TAG, "Recipe to save $recipe")
+            recipesViewModel.saveRecipe(recipe)
+            Snackbar.make(binding.root, "Receta Guardada", Snackbar.LENGTH_LONG).show()
+        }
+    }
+
+    private fun loadData() {
         val recipe = args.recipe
         val prepTime = timeToString(recipe.details.preparationTime)
         //val prepTime = timeToString(452)
@@ -41,28 +66,10 @@ class RecipeDetailActivity : AppCompatActivity() {
         binding.tvSkill.text = recipe.details.skillLevel
         binding.tvServings.text = recipe.details.servings.toString().plus(" porciones")
         binding.tvTime.text = prepTime
-//        binding.tvTime.text = timeToString(recipe.details.preparationTime)
+        //        binding.tvTime.text = timeToString(recipe.details.preparationTime)
         binding.tvRecipeSteps.text = recipe.instructions
         Glide.with(binding.root).load(recipe.image).into(binding.ivFood)
-
     }
-
-    /*private fun timeToString(time: Int): String {
-        if (time <= 60){
-            return "$time min"
-        }
-        val hours = time.toDouble()/60
-        val rounded = BigDecimal(hours).setScale(1, RoundingMode.HALF_EVEN).toString()
-        return rounded.plus(" hrs")
-    }
-
-    private fun getIngredients(ingredients: String): List<String>{
-        var list = ingredients.split('|');
-        list = list.map { item ->
-            "\u2022 $item"
-        }
-        return list
-    }*/
 
     private fun setUpIngredientsView(ingredients: List<String>){
         /*val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, ingredients)
