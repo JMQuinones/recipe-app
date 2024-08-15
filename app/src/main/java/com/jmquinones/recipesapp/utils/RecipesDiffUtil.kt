@@ -2,10 +2,11 @@ package com.jmquinones.recipesapp.utils
 
 import androidx.recyclerview.widget.DiffUtil
 import com.jmquinones.recipesapp.models.Recipe
+import com.jmquinones.recipesapp.models.RecipeRoom
 
 class RecipesDiffUtil(
-    private val oldList: List<Recipe>,
-    private val newList: List<Recipe>
+    private val oldList: List<RecipeRoom>,
+    private val newList: List<RecipeRoom>
 ) : DiffUtil.Callback() {
     override fun getOldListSize(): Int = oldList.size
 

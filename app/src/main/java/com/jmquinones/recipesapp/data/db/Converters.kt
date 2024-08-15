@@ -18,7 +18,7 @@ class Converters {
     @TypeConverter
     fun toAuthor(author: String): Author {
         val json = JSONObject(author)
-        return Author(json.getString("id"), json.getString("name"), json.getString("photo"))
+        return Author(json.getString("about"), json.getString("name"), json.getString("photo"))
     }
 
     @TypeConverter

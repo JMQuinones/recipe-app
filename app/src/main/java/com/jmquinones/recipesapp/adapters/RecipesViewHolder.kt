@@ -7,11 +7,12 @@ import com.bumptech.glide.Glide
 import com.jmquinones.recipesapp.R
 import com.jmquinones.recipesapp.databinding.RecipeItemBinding
 import com.jmquinones.recipesapp.models.Recipe
+import com.jmquinones.recipesapp.models.RecipeRoom
 import com.jmquinones.recipesapp.utils.RecipesUtils
 
 class RecipesViewHolder(view: View): RecyclerView.ViewHolder(view) {
     private val binding = RecipeItemBinding.bind(view)
-    fun render(recipe: Recipe, onItemSelected: (Recipe) -> Unit) {
+    fun render(recipe: RecipeRoom, onItemSelected: (RecipeRoom) -> Unit) {
         val context: Context = binding.tvTitle.context
         binding.cvRecipe.setOnClickListener{
             onItemSelected(recipe)

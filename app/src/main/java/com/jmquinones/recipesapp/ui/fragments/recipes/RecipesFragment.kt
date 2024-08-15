@@ -89,7 +89,7 @@ class RecipesFragment : Fragment() {
         }
     }
 
-    private fun setupRecyclerview() {
+    /*private fun setupRecyclerview() {
         recipesAdapter = RecipesAdapter(onItemSelected = { recipe ->
             findNavController().navigate(
                 RecipesFragmentDirections.actionRecipesFragmentToRecipeDetailActivity(recipe)
@@ -133,5 +133,5 @@ class RecipesFragment : Fragment() {
 
     private fun controlProgressBar(isVisible: Boolean) {
         binding.paginationProgressBar.isVisible = isVisible
-    }
+    }*/
 }

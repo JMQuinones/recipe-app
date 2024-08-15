@@ -6,11 +6,12 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.jmquinones.recipesapp.R
 import com.jmquinones.recipesapp.models.Recipe
+import com.jmquinones.recipesapp.models.RecipeRoom
 import com.jmquinones.recipesapp.utils.RecipesDiffUtil
 
-class RecipesAdapter(private var recipesList: List<Recipe> = emptyList(), private val onItemSelected:(Recipe) -> Unit): RecyclerView.Adapter<RecipesViewHolder>() {
+class RecipesAdapter(private var recipesList: List<RecipeRoom> = emptyList(), private val onItemSelected:(RecipeRoom) -> Unit): RecyclerView.Adapter<RecipesViewHolder>() {
 
-    fun updateList(newList: List<Recipe>){
+    fun updateList(newList: List<RecipeRoom>){
         /*recipesList = list
         notifyDataSetChanged()*/
 
