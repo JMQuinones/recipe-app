@@ -40,5 +40,9 @@
         <argument
             android:name="recipe"
             app:argType="com.jmquinones.recipesapp.models.Recipe" />
+        <argument
+            android:name="is_saved"
+            app:argType="boolean"
+            android:defaultValue="false" />
     </activity>
 </navigation>

@@ -3,6 +3,7 @@ package com.jmquinones.recipesapp.ui
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.navArgs
 import androidx.paging.LOG_TAG
@@ -44,6 +45,10 @@ class RecipeDetailActivity : AppCompatActivity() {
     }
 
     private fun initListeners() {
+        if (args.isSaved) {
+            binding.fabSaveRecipe.isVisible = false
+            return
+        }
         binding.fabSaveRecipe.setOnClickListener {
             val recipe = recipeToRoomRecipe(args.recipe)
             Log.d(TAG, "Recipe to save $recipe")

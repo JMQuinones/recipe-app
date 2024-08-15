@@ -35,5 +35,18 @@ class RecipesUtils {
                 recipe.title,
             )
         }
+
+        fun recipeRoomToRecipe(recipeRoom: RecipeRoom): Recipe{
+            return Recipe(
+                recipeRoom.id,
+                recipeRoom.author,
+                recipeRoom.description,
+                recipeRoom.details,
+                recipeRoom.image,
+                recipeRoom.ingredients,
+                recipeRoom.instructions,
+                recipeRoom.title,
+            )
+        }
     }
 }

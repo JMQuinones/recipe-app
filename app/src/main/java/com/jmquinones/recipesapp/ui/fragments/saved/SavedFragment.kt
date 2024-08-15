@@ -6,11 +6,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jmquinones.recipesapp.adapters.RecipesAdapter
 import com.jmquinones.recipesapp.databinding.FragmentSavedBinding
 import com.jmquinones.recipesapp.ui.RecipesActivity
 import com.jmquinones.recipesapp.ui.RecipesViewModel
+import com.jmquinones.recipesapp.ui.fragments.recipes.RecipesFragmentDirections
+import com.jmquinones.recipesapp.utils.RecipesUtils
+import com.jmquinones.recipesapp.utils.RecipesUtils.Companion.recipeRoomToRecipe
 
 class SavedFragment : Fragment() {
 
@@ -53,8 +57,11 @@ class SavedFragment : Fragment() {
     }
 
     private fun initRecyclerView() {
-        recipesAdapter = RecipesAdapter(onItemSelected = {
-            Toast.makeText(requireContext(), "Recipe: ${it.title}", Toast.LENGTH_SHORT).show()
+        recipesAdapter = RecipesAdapter(onItemSelected = { recipeRoom ->
+            val recipe = recipeRoomToRecipe(recipeRoom)
+            findNavController().navigate(
+                SavedFragmentDirections.actionSavedFragmentToRecipeDetailActivity(recipe, true)
+            )
         })
         binding.rvSavedRecipes.apply {
             adapter = recipesAdapter
