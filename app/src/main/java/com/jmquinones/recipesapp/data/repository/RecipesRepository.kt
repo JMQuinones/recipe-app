@@ -11,6 +11,10 @@ class RecipesRepository(val db: RecipesDatabase) {
         return RetrofitInstance.api.getAllRecipes(page, pageSize)
     }
 
+    suspend fun searchByTitleOrAuthor(page: Int, pageSize: Int, query: String): Response<ResponseWrapper> {
+        return RetrofitInstance.api.searchByTitleOrAuthor(page, pageSize, query)
+    }
+
     suspend fun sayHello(): Response<String> {
         return RetrofitInstance.api.sayHello();
     }

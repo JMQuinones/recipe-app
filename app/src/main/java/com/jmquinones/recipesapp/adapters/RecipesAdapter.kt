@@ -9,7 +9,7 @@ import com.jmquinones.recipesapp.models.Recipe
 import com.jmquinones.recipesapp.models.RecipeRoom
 import com.jmquinones.recipesapp.utils.RecipesDiffUtil
 
-class RecipesAdapter(private var recipesList: List<RecipeRoom> = emptyList(), private val onItemSelected:(RecipeRoom) -> Unit): RecyclerView.Adapter<RecipesViewHolder>() {
+class RecipesAdapter( var recipesList: List<RecipeRoom> = emptyList(), private val onItemSelected:(RecipeRoom) -> Unit): RecyclerView.Adapter<RecipesViewHolder>() {
 
     fun updateList(newList: List<RecipeRoom>){
         /*recipesList = list

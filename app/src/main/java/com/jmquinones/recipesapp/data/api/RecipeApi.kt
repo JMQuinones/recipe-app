@@ -15,4 +15,11 @@ interface RecipeApi {
     @GET("api/recipe/hello")
     suspend fun sayHello(): Response<String>
 
+    @GET("api/recipe/search")
+    suspend fun searchByTitleOrAuthor(
+        @Query("page") page: Int,
+        @Query("size") pageSize: Int,
+        @Query("query") query: String
+    ): Response<ResponseWrapper>
+
 }

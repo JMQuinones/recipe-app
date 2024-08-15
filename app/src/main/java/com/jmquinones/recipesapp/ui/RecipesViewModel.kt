@@ -6,19 +6,25 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.jmquinones.recipesapp.data.paging.RecipePagingSource
+import com.jmquinones.recipesapp.data.paging.SearchRecipePagingSource
 import com.jmquinones.recipesapp.data.repository.RecipesRepository
+import com.jmquinones.recipesapp.models.Recipe
 import com.jmquinones.recipesapp.models.RecipeRoom
 import com.jmquinones.recipesapp.utils.Constants.Companion.PAGE_SIZE
 import com.jmquinones.recipesapp.utils.RecipesState
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class RecipesViewModel(private val recipesRepository: RecipesRepository, app:Application): ViewModel(){
+class RecipesViewModel(private val recipesRepository: RecipesRepository, app: Application) :
+    ViewModel() {
     private var _state = MutableStateFlow<RecipesState>(RecipesState.Loading)
     val state: StateFlow<RecipesState> = _state
+
     //getRecipes()
     var savedRecipes: LiveData<List<RecipeRoom>> = recipesRepository.getSavedRecipes()
 
@@ -29,11 +35,19 @@ class RecipesViewModel(private val recipesRepository: RecipesRepository, app:App
         pagingSourceFactory = { RecipePagingSource(recipesRepository) }
     ).flow.cachedIn(viewModelScope)
 
-    fun getRecipes(){
+    fun getSearchResults(query: String): Flow<PagingData<Recipe>> {
+        return Pager(
+            config = PagingConfig(pageSize = PAGE_SIZE),
+            pagingSourceFactory = { SearchRecipePagingSource(recipesRepository, query) }
+        ).flow.cachedIn(viewModelScope)
+    }
+
+
+    fun getRecipes() {
         viewModelScope.launch {
             _state.value = RecipesState.Loading
             val response = recipesRepository.getAllRecipes(page, PAGE_SIZE)
-            if (response.isSuccessful){
+            if (response.isSuccessful) {
                 response.body()?.let { body ->
                     _state.value = RecipesState.Success(body)
                 }

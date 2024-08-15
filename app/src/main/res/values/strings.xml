@@ -11,4 +11,6 @@
     <string name="instructions">Preparación</string>
     <string name="details_img_description">Image de la receta</string>
     <string name="save_recipe">Guardar</string>
+    <string name="search_hint">Nombre o Autor</string>
+    <string name="recipe_not_found">No se encontraron recetas</string>
 </resources>
