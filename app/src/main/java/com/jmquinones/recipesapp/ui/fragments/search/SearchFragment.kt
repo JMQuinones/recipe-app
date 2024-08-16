@@ -11,6 +11,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LOG_TAG
+import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jmquinones.recipesapp.adapters.RecipesPagingAdapter
@@ -62,14 +63,36 @@ class SearchFragment : Fragment() {
         }
 
 
+        viewLifecycleOwner.lifecycleScope.launch {
+            pagingAdapter.loadStateFlow.collectLatest { loadStates ->
+                val isListEmpty = pagingAdapter.itemCount == 0
+                Log.d(TAG, "Is list empty $isListEmpty")
+                Log.d(TAG, "Load state ${loadStates.refresh}")
+                if ((loadStates.refresh is LoadState.NotLoading || loadStates.refresh is LoadState.Error) && isListEmpty) {
+                    Log.d(TAG, "Inside true")
+
+                    binding.tvNotFound.visibility = View.VISIBLE
+                    binding.rvSearchedRecipes.visibility = View.GONE
+                } else {
+                    Log.d(TAG, "Inside else")
+
+                    binding.tvNotFound.visibility = View.GONE
+                    binding.rvSearchedRecipes.visibility = View.VISIBLE
+                }
+            }
+        }
+
+
         binding.btnSearch.setOnClickListener {
+            pagingAdapter.submitData(lifecycle, PagingData.empty())
             val query = binding.etSearch.text.toString()
             recipesViewModel.setQuery(query)
         }
     //initListeners()
     }
 
-    private fun initListeners() {
+    // TODO Implement reactive search
+    /*private fun initListeners() {
         var job: Job?= null
         binding.etSearch.addTextChangedListener { editable ->
             job?.cancel()
@@ -88,7 +111,7 @@ class SearchFragment : Fragment() {
                 }
             }
         }
-    }
+    }*/
 
     private fun setupPagingRecyclerView() {
         pagingAdapter = RecipesPagingAdapter(onItemSelected = { recipe ->
