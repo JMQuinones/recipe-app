@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LOG_TAG
 import androidx.paging.PagingData
@@ -53,7 +54,19 @@ class SearchFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupPagingRecyclerView()
         recipesViewModel = (activity as RecipesActivity).recipesViewModel
-        initListeners()
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            recipesViewModel.searchRecipes.collectLatest { pagingData ->
+                pagingAdapter.submitData(lifecycle, pagingData)
+            }
+        }
+
+
+        binding.btnSearch.setOnClickListener {
+            val query = binding.etSearch.text.toString()
+            recipesViewModel.setQuery(query)
+        }
+    //initListeners()
     }
 
     private fun initListeners() {

@@ -16,4 +16,6 @@
     <string name="loading_error">Error al cargar las recetas</string>
     <string name="error_string">Algo salio mal.\nIntente nuevamente</string>
     <string name="btn_retry">Recargar</string>
+    <string name="search_btn">Buscar</string>
+    <string name="search">Search</string>
 </resources>
