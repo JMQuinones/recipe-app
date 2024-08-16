@@ -13,11 +13,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.paging.LoadState
 import androidx.paging.PagingDataAdapter
 import androidx.paging.filter
 import androidx.paging.map
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
+import com.jmquinones.recipesapp.R
 import com.jmquinones.recipesapp.databinding.FragmentRecipesBinding
 import com.jmquinones.recipesapp.models.ResponseWrapper
 import com.jmquinones.recipesapp.ui.RecipesActivity
@@ -61,10 +63,17 @@ class RecipesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         //setupRecyclerview()
         setupPagingRecyclerView()
+        initListeners()
         recipesViewModel = (activity as RecipesActivity).recipesViewModel
         getRecipes()
 
 
+    }
+
+    private fun initListeners() {
+        binding.btnRetry.setOnClickListener {
+            pagingAdapter.retry()
+        }
     }
 
     private fun getRecipes() {
@@ -83,10 +92,59 @@ class RecipesFragment : Fragment() {
                 RecipesFragmentDirections.actionRecipesFragmentToRecipeDetailActivity(recipe)
             )
         })
+        pagingAdapter.addLoadStateListener { loadState ->
+            when (loadState.refresh) {  // refresh is for the first load, prepend and append are for subsequent loads
+                is LoadState.Loading -> {
+                    // Show loading spinner
+                    binding.firstLoadProgressBar.visibility = View.VISIBLE
+                    binding.tvError.visibility = View.GONE
+                    binding.btnRetry.visibility = View.GONE
+                }
+                is LoadState.NotLoading -> {
+                    // Hide loading spinner
+                    binding.firstLoadProgressBar.visibility = View.GONE
+                    binding.tvError.visibility = View.GONE
+                    binding.btnRetry.visibility = View.GONE
+                }
+                is LoadState.Error -> {
+                    // Hide loading spinner and show an error message
+                    binding.firstLoadProgressBar.visibility = View.GONE
+                    binding.tvError.visibility = View.VISIBLE
+                    binding.btnRetry.visibility = View.VISIBLE
+                    val error = (loadState.refresh as LoadState.Error).error
+                    showError(error)
+                }
+            }
+            when (loadState.append) {
+                is LoadState.Loading -> {
+                    binding.paginationProgressBar.visibility = View.VISIBLE
+                    /*binding.tvError.visibility = View.GONE
+                    binding.btnRetry.visibility = View.GONE*/
+                }
+                is LoadState.NotLoading -> {
+                    binding.paginationProgressBar.visibility = View.GONE
+                    /*binding.tvError.visibility = View.GONE
+                    binding.btnRetry.visibility = View.GONE*/
+                }
+                is LoadState.Error -> {
+                    // Show error message and allow retry
+                    val error = (loadState.prepend as LoadState.Error).error
+                    binding.paginationProgressBar.visibility = View.GONE
+                    binding.tvError.visibility = View.VISIBLE
+                    binding.btnRetry.visibility = View.VISIBLE
+                    showError(error)
+                }
+            }
+        }
         binding.rvRecipes.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = pagingAdapter
         }
+    }
+
+    private fun showError(error: Throwable) {
+        error.printStackTrace()
+        Snackbar.make(requireView(), getString(R.string.loading_error), Snackbar.LENGTH_LONG).show()
     }
 
     /*private fun setupRecyclerview() {
