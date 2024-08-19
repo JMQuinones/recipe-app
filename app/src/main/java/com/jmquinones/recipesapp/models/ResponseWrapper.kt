@@ -12,5 +12,6 @@ data class ResponseWrapper(
     val pageable: Pageable,
     val size: Int,
     val totalElements: Int,
-    val totalPages: Int
+    val totalPages: Int,
+    val message: String?
 )

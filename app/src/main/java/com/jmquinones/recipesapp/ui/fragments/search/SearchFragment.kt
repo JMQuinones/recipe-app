@@ -14,6 +14,8 @@ import androidx.paging.LOG_TAG
 import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
+import com.jmquinones.recipesapp.R
 import com.jmquinones.recipesapp.adapters.RecipesPagingAdapter
 import com.jmquinones.recipesapp.databinding.FragmentSearchBinding
 import com.jmquinones.recipesapp.ui.RecipesActivity
@@ -33,6 +35,7 @@ class SearchFragment : Fragment() {
     companion object {
         const val TAG = "SearchFragment"
     }
+
     private lateinit var pagingAdapter: RecipesPagingAdapter
     private lateinit var recipesViewModel: RecipesViewModel
 
@@ -56,6 +59,11 @@ class SearchFragment : Fragment() {
         setupPagingRecyclerView()
         recipesViewModel = (activity as RecipesActivity).recipesViewModel
 
+        initUI()
+        //initListeners()
+    }
+
+    private fun initUI() {
         viewLifecycleOwner.lifecycleScope.launch {
             recipesViewModel.searchRecipes.collectLatest { pagingData ->
                 pagingAdapter.submitData(lifecycle, pagingData)
@@ -82,13 +90,48 @@ class SearchFragment : Fragment() {
             }
         }
 
+        initListeners()
+    }
 
+    private fun initListeners() {
         binding.btnSearch.setOnClickListener {
             pagingAdapter.submitData(lifecycle, PagingData.empty())
             val query = binding.etSearch.text.toString()
             recipesViewModel.setQuery(query)
         }
-    //initListeners()
+        pagingAdapter.addLoadStateListener { loadState ->
+            when (loadState.refresh) {
+                is LoadState.Loading -> {
+                    binding.searchProgressBar.visibility = View.VISIBLE
+                    binding.tvNotFound.visibility = View.GONE
+                }
+
+                is LoadState.NotLoading -> {
+                    binding.searchProgressBar.visibility = View.GONE
+                    binding.tvNotFound.visibility = View.GONE
+                }
+
+                is LoadState.Error -> {
+                    binding.searchProgressBar.visibility = View.GONE
+                    val error = (loadState.refresh as LoadState.Error).error
+                    showError(error)
+                }
+            }
+        }
+    }
+
+    private fun showError(error: Throwable) {
+        error.printStackTrace()
+        val message =
+            Snackbar.make(
+                requireView(),
+                getString(
+                    R.string.loading_error,
+                    error.message.orEmpty().plus(getString(R.string.empty_error))
+                ),
+                Snackbar.LENGTH_LONG
+            ).show()
+
     }
 
     // TODO Implement reactive search

@@ -5,6 +5,8 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.jmquinones.recipesapp.data.repository.RecipesRepository
 import com.jmquinones.recipesapp.models.Recipe
+import com.jmquinones.recipesapp.utils.NetworkUtils
+import java.io.IOException
 
 class SearchRecipePagingSource(
     private val recipesRepository: RecipesRepository,
@@ -14,9 +16,12 @@ class SearchRecipePagingSource(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Recipe> {
         val page = params.key ?: 0
         return try {
+            if (!NetworkUtils.hasInternetConnection()){
+                throw IOException("Revise su conexion a Internet")
+            }
             val response = recipesRepository.searchByTitleOrAuthor(page, params.loadSize, query)
             if (!response.isSuccessful) {
-                throw Exception(response.code().toString())
+                throw Exception(response.message())
             }
 
             Log.d("PagingSource", "Loaded page $page")

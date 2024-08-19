@@ -144,7 +144,7 @@ class RecipesFragment : Fragment() {
 
     private fun showError(error: Throwable) {
         error.printStackTrace()
-        Snackbar.make(requireView(), getString(R.string.loading_error), Snackbar.LENGTH_LONG).show()
+        Snackbar.make(requireView(), getString(R.string.loading_error, error.message), Snackbar.LENGTH_LONG).show()
     }
 
     /*private fun setupRecyclerview() {
