@@ -19,4 +19,8 @@
     <string name="btn_retry">Recargar</string>
     <string name="search_btn">Buscar</string>
     <string name="search">Search</string>
+    <string name="settings">Ajustes</string>
+    <string name="dark_theme">Modo oscuro</string>
+    <string name="dark_mode_description">Activa el modo oscuro</string>
+    <string name="dark_theme_content">Modo oscuro</string>
 </resources>
