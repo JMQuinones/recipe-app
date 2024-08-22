@@ -1,7 +1,6 @@
 package com.jmquinones.recipesapp.utils
 
 import androidx.recyclerview.widget.DiffUtil
-import com.jmquinones.recipesapp.models.Recipe
 import com.jmquinones.recipesapp.models.RecipeRoom
 
 class RecipesDiffUtil(

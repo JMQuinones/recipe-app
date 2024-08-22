@@ -3,7 +3,6 @@ package com.jmquinones.recipesapp.models
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.io.Serializable
-import java.sql.Date
 
 @Entity(tableName = "recipes")
 class RecipeRoom(

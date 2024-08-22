@@ -2,27 +2,27 @@ package com.jmquinones.recipesapp.ui
 
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.navArgs
-import androidx.paging.LOG_TAG
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
-import com.jmquinones.recipesapp.data.db.RecipesDatabase
-import com.jmquinones.recipesapp.data.repository.RecipesRepository
 import com.jmquinones.recipesapp.databinding.ActivityRecipeDetailBinding
-import com.jmquinones.recipesapp.models.RecipeRoom
 import com.jmquinones.recipesapp.utils.RecipesUtils.Companion.getIngredients
 import com.jmquinones.recipesapp.utils.RecipesUtils.Companion.recipeToRoomRecipe
 import com.jmquinones.recipesapp.utils.RecipesUtils.Companion.timeToString
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class RecipeDetailActivity : AppCompatActivity() {
     companion object{
         private const val TAG = "RecipeDetailActivity"
     }
     private lateinit var binding: ActivityRecipeDetailBinding
-    private lateinit var recipesViewModel: RecipesViewModel
+    //private lateinit var recipesViewModel: RecipesViewModel
+    private val recipesViewModel by viewModels<RecipesViewModel>()
+
 
     private val args:RecipeDetailActivityArgs by navArgs()
 
@@ -30,11 +30,6 @@ class RecipeDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityRecipeDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val db = RecipesDatabase(this)
-        val recipesRepository = RecipesRepository(db)
-
-        val viewModelProviderFactory = RecipesViewModelProviderFactory(application, recipesRepository)
-        recipesViewModel = ViewModelProvider(this, viewModelProviderFactory)[RecipesViewModel::class.java]
         initUI()
     }
 
