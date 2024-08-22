@@ -47,6 +47,7 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.activity)
+    implementation(libs.androidx.fragment.ktx)
     implementation(libs.androidx.constraintlayout)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
@@ -71,4 +72,15 @@ dependencies {
     // Dagger
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
+
+    // Glide
+    implementation(libs.glide)
+    ksp(libs.compiler)
+
+    // Paging
+    implementation (libs.androidx.paging.runtime.ktx)
+
+    // Datastore
+    implementation(libs.androidx.datastore.preferences)
+
 }
