@@ -16,6 +16,7 @@ import com.jmquinones.recipesapp.models.Recipe
 import com.jmquinones.recipesapp.models.RecipeRoom
 import com.jmquinones.recipesapp.utils.Constants.Companion.PAGE_SIZE
 import com.jmquinones.recipesapp.utils.RecipesState
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,8 +24,10 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class RecipesViewModel(private val recipesRepository: RecipesRepository, app: Application) :
+@HiltViewModel
+class RecipesViewModel @Inject constructor(private val recipesRepository: RecipesRepository) :
     ViewModel() {
     private var _state = MutableStateFlow<RecipesState>(RecipesState.Loading)
     val state: StateFlow<RecipesState> = _state

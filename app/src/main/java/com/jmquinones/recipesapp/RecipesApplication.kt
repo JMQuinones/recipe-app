@@ -2,7 +2,9 @@ package com.jmquinones.recipesapp
 
 import android.app.Application
 import android.content.Context
+import dagger.hilt.android.HiltAndroidApp
 
+@HiltAndroidApp
 class RecipesApplication:Application() {
     override fun onCreate() {
         super.onCreate()
@@ -10,8 +12,6 @@ class RecipesApplication:Application() {
     }
 
     companion object {
-
         lateinit  var appContext: Context
-
     }
 }

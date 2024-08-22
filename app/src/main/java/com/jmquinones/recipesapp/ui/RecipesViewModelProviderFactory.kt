@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.jmquinones.recipesapp.data.repository.RecipesRepository
 
 class RecipesViewModelProviderFactory(val app: Application, val recipesRepository: RecipesRepository): ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+    /*override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return RecipesViewModel(recipesRepository, app) as T
-    }
+    }*/
 }

@@ -13,7 +13,7 @@ import com.jmquinones.recipesapp.models.RecipeRoom
 abstract class RecipesDatabase: RoomDatabase() {
     abstract fun getRecipesDao(): RecipesDao
 
-    companion object {
+    /*companion object {
         @Volatile
         private var instance: RecipesDatabase? = null
         private val LOCK = Any()
@@ -28,6 +28,6 @@ abstract class RecipesDatabase: RoomDatabase() {
                 RecipesDatabase::class.java,
                 "recipes_db.db"
             ).build()
-    }
+    }*/
 
 }

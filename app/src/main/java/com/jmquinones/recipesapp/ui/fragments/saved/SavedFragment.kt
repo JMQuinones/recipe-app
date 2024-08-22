@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,12 +19,14 @@ import com.jmquinones.recipesapp.ui.RecipesViewModel
 import com.jmquinones.recipesapp.ui.fragments.recipes.RecipesFragmentDirections
 import com.jmquinones.recipesapp.utils.RecipesUtils
 import com.jmquinones.recipesapp.utils.RecipesUtils.Companion.recipeRoomToRecipe
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SavedFragment : Fragment() {
 
     private lateinit var recipesAdapter: RecipesAdapter
-    private lateinit var recipesViewModel: RecipesViewModel
-
+    //private lateinit var recipesViewModel: RecipesViewModel
+    private val recipesViewModel by viewModels<RecipesViewModel>()
     private var _binding: FragmentSavedBinding? = null
     private val binding get() = _binding!!
 
@@ -42,7 +45,7 @@ class SavedFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        recipesViewModel = (activity as RecipesActivity).recipesViewModel
+        //recipesViewModel = (activity as RecipesActivity).recipesViewModel
 
         initUI()
         val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(

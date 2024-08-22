@@ -13,11 +13,14 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.preferencesDataStore
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.jmquinones.recipesapp.databinding.FragmentSettingsBinding
 import com.jmquinones.recipesapp.models.SettingsModel
+import com.jmquinones.recipesapp.ui.RecipesViewModel
 import com.jmquinones.recipesapp.ui.dataStore
 import com.jmquinones.recipesapp.utils.Constants.Companion.DARK_MODE_KEY
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filter
@@ -26,11 +29,12 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 
+@AndroidEntryPoint
 class SettingsFragment : Fragment() {
 
     private var _binding: FragmentSettingsBinding? = null
     private val binding get() = _binding!!
-
+    private val recipesViewModel by viewModels<RecipesViewModel>()
     private var firstTime: Boolean = true
 
     override fun onCreateView(

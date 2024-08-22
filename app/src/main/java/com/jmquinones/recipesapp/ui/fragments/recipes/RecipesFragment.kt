@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -27,10 +28,11 @@ import com.jmquinones.recipesapp.ui.RecipesViewModel
 import com.jmquinones.recipesapp.adapters.RecipesAdapter
 import com.jmquinones.recipesapp.adapters.RecipesPagingAdapter
 import com.jmquinones.recipesapp.utils.RecipesState
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-
+@AndroidEntryPoint
 class RecipesFragment : Fragment() {
     companion object {
         val TAG = "RecipesFragment"
@@ -42,8 +44,8 @@ class RecipesFragment : Fragment() {
     private lateinit var recipesAdapter: RecipesAdapter
     private lateinit var pagingAdapter: RecipesPagingAdapter
 
-    //private val recipesViewModel by viewModels<RecipesViewModel>()
-    private lateinit var recipesViewModel: RecipesViewModel
+    private val recipesViewModel by viewModels<RecipesViewModel>()
+    //private lateinit var recipesViewModel: RecipesViewModel
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,7 +66,7 @@ class RecipesFragment : Fragment() {
         //setupRecyclerview()
         setupPagingRecyclerView()
         initListeners()
-        recipesViewModel = (activity as RecipesActivity).recipesViewModel
+        //recipesViewModel = (activity as RecipesActivity).recipesViewModel
         getRecipes()
 
 

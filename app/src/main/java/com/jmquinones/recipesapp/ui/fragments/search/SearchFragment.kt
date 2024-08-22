@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LOG_TAG
@@ -22,6 +23,7 @@ import com.jmquinones.recipesapp.ui.RecipesActivity
 import com.jmquinones.recipesapp.ui.RecipesViewModel
 import com.jmquinones.recipesapp.ui.fragments.recipes.RecipesFragmentDirections
 import com.jmquinones.recipesapp.utils.Constants.Companion.SEARCH_DELAY
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
@@ -31,14 +33,15 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 
+@AndroidEntryPoint
 class SearchFragment : Fragment() {
     companion object {
         const val TAG = "SearchFragment"
     }
 
     private lateinit var pagingAdapter: RecipesPagingAdapter
-    private lateinit var recipesViewModel: RecipesViewModel
-
+    //private lateinit var recipesViewModel: RecipesViewModel
+    private val recipesViewModel by viewModels<RecipesViewModel>()
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,7 +60,7 @@ class SearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupPagingRecyclerView()
-        recipesViewModel = (activity as RecipesActivity).recipesViewModel
+        //recipesViewModel = (activity as RecipesActivity).recipesViewModel
 
         initUI()
         //initListeners()
