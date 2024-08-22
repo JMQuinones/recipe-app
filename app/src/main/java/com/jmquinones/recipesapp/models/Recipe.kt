@@ -1,7 +1,5 @@
 package com.jmquinones.recipesapp.models
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
 import java.io.Serializable
 
 data class Recipe(

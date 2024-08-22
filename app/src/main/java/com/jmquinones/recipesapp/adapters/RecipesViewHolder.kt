@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.jmquinones.recipesapp.R
 import com.jmquinones.recipesapp.databinding.RecipeItemBinding
-import com.jmquinones.recipesapp.models.Recipe
 import com.jmquinones.recipesapp.models.RecipeRoom
 import com.jmquinones.recipesapp.utils.RecipesUtils
 

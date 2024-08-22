@@ -1,7 +1,5 @@
 package com.jmquinones.recipesapp.ui
 
-import android.app.Application
-import android.app.appsearch.SearchResult
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

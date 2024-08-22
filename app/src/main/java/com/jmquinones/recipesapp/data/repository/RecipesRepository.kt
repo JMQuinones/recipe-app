@@ -1,7 +1,6 @@
 package com.jmquinones.recipesapp.data.repository
 
 import com.jmquinones.recipesapp.data.api.RecipeApi
-import com.jmquinones.recipesapp.data.api.RetrofitInstance
 import com.jmquinones.recipesapp.data.db.RecipesDatabase
 import com.jmquinones.recipesapp.models.RecipeRoom
 import com.jmquinones.recipesapp.models.ResponseWrapper

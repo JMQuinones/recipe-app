@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.jmquinones.recipesapp.R
-import com.jmquinones.recipesapp.models.Recipe
 import com.jmquinones.recipesapp.models.RecipeRoom
 import com.jmquinones.recipesapp.utils.RecipesDiffUtil
 

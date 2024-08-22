@@ -5,16 +5,10 @@ import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.navArgs
-import androidx.paging.LOG_TAG
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
-import com.jmquinones.recipesapp.data.db.RecipesDatabase
-import com.jmquinones.recipesapp.data.repository.RecipesRepository
 import com.jmquinones.recipesapp.databinding.ActivityRecipeDetailBinding
-import com.jmquinones.recipesapp.models.RecipeRoom
 import com.jmquinones.recipesapp.utils.RecipesUtils.Companion.getIngredients
 import com.jmquinones.recipesapp.utils.RecipesUtils.Companion.recipeToRoomRecipe
 import com.jmquinones.recipesapp.utils.RecipesUtils.Companion.timeToString
@@ -36,11 +30,6 @@ class RecipeDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityRecipeDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        /*val db = RecipesDatabase(this)
-        val recipesRepository = RecipesRepository(db)*/
-
-        /*val viewModelProviderFactory = RecipesViewModelProviderFactory(application, recipesRepository)
-        recipesViewModel = ViewModelProvider(this, viewModelProviderFactory)[RecipesViewModel::class.java]*/
         initUI()
     }
 
